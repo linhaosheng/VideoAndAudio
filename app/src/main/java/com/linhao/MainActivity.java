@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecord() {
         recordAdapter = new RecordAdapter();
-        recordAdapter.createDefaultAudio(System.currentTimeMillis() + ".mp3");
+        recordAdapter.createDefaultAudio(System.currentTimeMillis() + "");
     }
 
 
@@ -98,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
     //开始录音
     private void startRecord() {
+        if (recordAdapter == null) {
+            Toast.makeText(MainActivity.this, "请初始化录音", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Toast.makeText(MainActivity.this, "开始录音", Toast.LENGTH_SHORT).show();
         recordAdapter.checkStartRecord();
         Observable.create(new ObservableOnSubscribe<String>() {
@@ -122,5 +126,15 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "录音失败" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (recordAdapter != null) {
+            recordAdapter.release();
+            recordAdapter = null;
+        }
     }
 }

@@ -71,7 +71,6 @@ public class RecordAdapter {
 
         // new一个byte数组用来存一些字节数据，大小为缓冲区大小
         byte[] audiodata = new byte[bufferSizeInBytes];
-
         FileOutputStream fos = null;
         int readsize = 0;
         try {
@@ -146,5 +145,16 @@ public class RecordAdapter {
 
         this.fileName = fileName;
         status = Status.STATUS_READY;
+    }
+
+    /**
+     * 释放资源
+     */
+    public void release() {
+        if (audioRecord != null) {
+            audioRecord.stop();
+            audioRecord.release();
+            audioRecord = null;
+        }
     }
 }
