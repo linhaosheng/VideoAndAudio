@@ -6,14 +6,33 @@
     android:layout_height="match_parent"
     tools:context="com.linhao.MainActivity">
 
-    <TextView
-        android:id="@+id/sample_text"
+
+    <Button
+        android:id="@+id/start_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="145dp"
+        android:text="开始录音"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/stop_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="停止录音"
+        app:layout_constraintStart_toStartOf="@+id/start_record"
+        app:layout_constraintTop_toBottomOf="@+id/start_record" />
+
+    <Button
+        android:id="@+id/record_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:text="转换"
+        app:layout_constraintStart_toStartOf="@+id/stop_record"
+        app:layout_constraintTop_toBottomOf="@+id/stop_record" />
 
 </android.support.constraint.ConstraintLayout>
