@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.linhao.record.AudioTrackAdapter;
 import com.linhao.record.PcmToWav;
 import com.linhao.record.RecordAdapter;
 import com.linhao.utils.FileUtils;
@@ -34,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
     Button stopRecord;
     @BindView(R.id.record_change)
     Button recordChange;
+    @BindView(R.id.play_record)
+    Button playRecord;
     private RecordAdapter recordAdapter;
+    private AudioTrackAdapter audioTrackAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +46,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initRecord();
+        initAudioTrack();
+    }
+
+    private void initAudioTrack() {
+        if (audioTrackAdapter == null) {
+            audioTrackAdapter = new AudioTrackAdapter();
+        }
+        audioTrackAdapter.createAudioTrack();
     }
 
     private void initRecord() {
-        recordAdapter = new RecordAdapter();
+        if (recordAdapter == null) {
+            recordAdapter = new RecordAdapter();
+        }
         recordAdapter.createDefaultAudio(System.currentTimeMillis() + "");
     }
 
@@ -56,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public native String stringFromJNI();
 
-    @OnClick({R.id.start_record, R.id.stop_record, R.id.record_change})
+    @OnClick({R.id.start_record, R.id.stop_record, R.id.record_change, R.id.play_record})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.start_record) {
@@ -67,7 +81,39 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.record_change) {
             Toast.makeText(MainActivity.this, "开始转换", Toast.LENGTH_SHORT).show();
             startChangePcmToWav();
+        } else if (id == R.id.play_record) {
+            playAudioTrack();
         }
+    }
+
+    //播放pcm录音数据
+    private void playAudioTrack() {
+        Toast.makeText(MainActivity.this, "开始播放pcm录音数据", Toast.LENGTH_SHORT).show();
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+
+                if (audioTrackAdapter!=null){
+                    String pcmPath = "/storage/emulated/0/pauseRecordDemo/pcm/1524752733065.mp3.pcm";
+                    audioTrackAdapter.playAudio(pcmPath);
+                }
+                emitter.onNext("");
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+
+                        Toast.makeText(MainActivity.this, "播放结束", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("audioTrackerror==", "==" + throwable.getMessage());
+                        Toast.makeText(MainActivity.this, "播放出错", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     //将pcm文件转换为wav文件

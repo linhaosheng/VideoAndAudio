@@ -11,9 +11,11 @@
         android:id="@+id/start_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="126dp"
-        android:layout_marginTop="145dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="156dp"
         android:text="开始录音"
+        app:layout_constraintEnd_toStartOf="@+id/stop_record"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,18 +23,32 @@
         android:id="@+id/stop_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="3dp"
         android:text="停止录音"
-        app:layout_constraintStart_toStartOf="@+id/start_record"
-        app:layout_constraintTop_toBottomOf="@+id/start_record" />
+        app:layout_constraintEnd_toStartOf="@+id/record_change"
+        app:layout_constraintStart_toEndOf="@+id/start_record"
+        app:layout_constraintTop_toTopOf="@+id/start_record" />
 
     <Button
         android:id="@+id/record_change"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
+        android:layout_marginEnd="16dp"
         android:text="转换"
-        app:layout_constraintStart_toStartOf="@+id/stop_record"
-        app:layout_constraintTop_toBottomOf="@+id/stop_record" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/stop_record"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/stop_record" />
+
+    <Button
+        android:id="@+id/play_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="180dp"
+        android:text="播放录音"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/start_record"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/start_record" />
 
 </android.support.constraint.ConstraintLayout>
