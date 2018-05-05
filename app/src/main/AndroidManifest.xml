@@ -23,7 +23,7 @@
         android:supportsRtl="true"
 
         android:theme="@style/AppTheme">
-        <activity android:name=".RecordVideoActivity">
+        <activity android:name=".FfmpegPlayVideoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,6 +32,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".VideoActivity"/>
+        <activity android:name=".RecordVideoActivity"/>
 
     </application>
 
