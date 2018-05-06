@@ -11,6 +11,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters 'armeabi'
+            abiFilters "armeabi-v7a"
         }
         externalNativeBuild {
             cmake {
